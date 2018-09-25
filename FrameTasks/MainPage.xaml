@@ -5,7 +5,13 @@
     xmlns:local="using:FrameTasks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:FrameTasks"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPage />
+    </Page.DataContext>
+
 
     <Page.Resources>
         <Style x:Key="CellTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource SubtitleTextBlockStyle}">
@@ -34,7 +40,7 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" Grid.ColumnSpan="5" Background="Beige" BorderThickness="2" BorderBrush="Black">
-            <TextBlock HorizontalAlignment="Center" Text="Task 1.1" Style="{ThemeResource CellTextBlockStyle}"/>
+            <TextBlock x:Name="T1" HorizontalAlignment="Center" Style="{ThemeResource CellTextBlockStyle}"/>
         </Border>
 
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="Task 2.1" Style="{ThemeResource CellTextBlockStyle}"/>

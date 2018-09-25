@@ -17,5 +17,10 @@ namespace FrameTasks
 	public:
 		MainPage();
 
+		static void thread_fn(MainPage^ _MainPage);
+
+
+	private:
+		std::thread thr;
 	};
 }

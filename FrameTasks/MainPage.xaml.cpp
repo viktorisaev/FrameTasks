@@ -21,7 +21,17 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
+void MainPage::thread_fn(MainPage^ _MainPage)
+{
+	Platform::String^ str = L"T1";
+	_MainPage->T1->Text = str;
+}
+
 MainPage::MainPage()
 {
 	InitializeComponent();
+
+	thr = std::thread(thread_fn, this);
+
+	thr.join();
 }
