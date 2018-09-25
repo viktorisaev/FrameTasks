@@ -24,17 +24,25 @@ namespace FrameTasksCS
 
     internal class TaskOnTimer
     {
-        public Task DoTask(double _Millis, Action<string> _Setter)
+        private double TASK_DELAY = 120;
+
+
+        public Task DoTask(int _Counter, Action<string> _Setter)
         {
             IAsyncAction asyncAction = Windows.System.Threading.ThreadPool.RunAsync( (workItem) =>
             {
-                m_Value += 1;
-                Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                int value = _Counter;
+                while (value > 0)
                 {
-                    _Setter(m_Value.ToString());
-                });
+                    Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                    {
+                        _Setter(value.ToString());
+                    });
 
-                Task.Delay(TimeSpan.FromMilliseconds(_Millis)).Wait();
+                    Task.Delay(TimeSpan.FromMilliseconds(TASK_DELAY)).Wait();
+
+                    value -= 1;
+                }
             });
 
             return asyncAction.AsTask();
@@ -53,7 +61,7 @@ namespace FrameTasksCS
 
         }
 
-        private int m_Value;
+//        private int m_Value;
     }
 
 
@@ -85,12 +93,12 @@ namespace FrameTasksCS
                 while(workItem.Status != AsyncStatus.Canceled)
                 {
                     // step 1
-                    var t1 = m_Task1.DoTask(450, (s) => { m_TasksVM.T1 = s; });
+                    var t1 = m_Task1.DoTask(8, (s) => { m_TasksVM.T1 = s; });
                     await t1;
 
                     // step 2 (2 parallel tasks)
-                    var t2 = m_Task2.DoTask(190, (s) => { m_TasksVM.T2 = s; });
-                    var t3 = m_Task3.DoTask(490, (s) => { m_TasksVM.T3 = s; });
+                    var t2 = m_Task2.DoTask(3, (s) => { m_TasksVM.T2 = s; });
+                    var t3 = m_Task3.DoTask(6, (s) => { m_TasksVM.T3 = s; });
                     s2[0] = t2;
                     s2[1] = t3;
                     await Task.WhenAll(s2);
