@@ -43,7 +43,7 @@
             <TextBlock Text="{Binding T1}" HorizontalAlignment="Center" Style="{ThemeResource CellTextBlockStyle}"/>
         </Border>
 
-        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="Task 2.1" Style="{ThemeResource CellTextBlockStyle}"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding T2}" Style="{ThemeResource CellTextBlockStyle}"/>
         <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Text="Task 2.2" Style="{ThemeResource CellTextBlockStyle}"/>
         <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Text="Task 2.3" Style="{ThemeResource CellTextBlockStyle}"/>
         <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Text="Task 2.4" Style="{ThemeResource CellTextBlockStyle}"/>

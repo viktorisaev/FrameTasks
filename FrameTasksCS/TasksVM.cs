@@ -16,6 +16,15 @@ namespace FrameTasksCS
         }
         private string m_T1;
 
+
+        public string T2
+        {
+            get { return m_T2; }
+            set { m_T2 = value; OnPropertyChanged("T2"); }  // the name is used in XAML
+        }
+        private string m_T2;
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(String info)
         {

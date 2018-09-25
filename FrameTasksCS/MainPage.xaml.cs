@@ -21,6 +21,27 @@ namespace FrameTasksCS
 {
 
 
+    internal class TaskOnTimer
+    {
+        private int m_Value;
+
+        public TaskOnTimer(double _Millis, Action<string> _Setter)
+        {
+//            m_TargetStringVM = _TargetStringVM;
+
+            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((ThreadPoolTimer timer) =>
+            {
+                m_Value += 1;
+                Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                {
+                    _Setter(m_Value.ToString());
+                });
+            }, TimeSpan.FromMilliseconds(_Millis));
+
+        }
+
+//        private ref string m_TargetStringVM;
+    }
 
 
 
@@ -34,25 +55,17 @@ namespace FrameTasksCS
 
             this.DataContext = m_TasksVM;
 
-            // set initial data (through binding)
-            m_T1Value = 0;
-            m_TasksVM.T1 = "my task!!";
 
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer((ThreadPoolTimer timer) => 
-            {
-                m_T1Value += 1;
-                Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
-                {
-                    m_TasksVM.T1 = m_T1Value.ToString();
-                });
-            }, TimeSpan.FromMilliseconds(450));
+            // set initial data (through binding)
+            m_Task1 = new TaskOnTimer(450, (s) => { m_TasksVM.T1 = s; });
+            m_Task2 = new TaskOnTimer(190, (s) => { m_TasksVM.T2 = s; });
+
         }
 
-        
-        // threads
 
-        // values
-        int m_T1Value;
+        // threads
+        TaskOnTimer m_Task1;
+        TaskOnTimer m_Task2;
 
         // VM
         TasksVM m_TasksVM;
